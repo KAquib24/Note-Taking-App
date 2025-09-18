@@ -2,13 +2,14 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+// ✅ Extend Request to include userId and optional multer files
 export interface AuthRequest extends Request {
-  userId?: string; // attach userId to request
+  userId?: string;
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] }; 
 }
 
 export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    // Get token from headers
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1]; // Expect "Bearer TOKEN"
 
@@ -16,10 +17,9 @@ export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction)
       return res.status(401).json({ message: "No token, authorization denied" });
     }
 
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
-
     req.userId = decoded.id; // Attach userId to request
+
     next();
   } catch (err) {
     console.error("Auth middleware error:", err);

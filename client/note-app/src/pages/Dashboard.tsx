@@ -7,6 +7,7 @@ interface Note {
   tags?: string[];
   folder?: string;
   createdAt: string;
+  attachments?: string[]; // ✅ New field for uploaded files
 }
 
 interface DashboardProps {
@@ -218,14 +219,17 @@ const Dashboard = ({ searchQuery, searchFilter }: DashboardProps) => {
               ) : (
                 <>
                   <h2 className="text-xl font-semibold text-gray-800">{note.title}</h2>
-                  
-                  {/* ✅ Render HTML safely with formatting */}
+
+                  {/* Render HTML safely */}
                   <div
                     className="text-gray-700 mt-2 prose max-w-none"
                     dangerouslySetInnerHTML={{ __html: note.content }}
                   />
 
+                  {/* Folder */}
                   <p className="text-xs text-gray-500 mt-2">Folder: {note.folder || "General"}</p>
+
+                  {/* Tags */}
                   {note.tags && note.tags.length > 0 && (
                     <div className="mt-2">
                       {note.tags.map((tag, idx) => (
@@ -238,9 +242,40 @@ const Dashboard = ({ searchQuery, searchFilter }: DashboardProps) => {
                       ))}
                     </div>
                   )}
+
+                  {/* ✅ Attachments */}
+                  {note.attachments && note.attachments.length > 0 && (
+                    <div className="mt-3">
+                      <h3 className="font-semibold text-gray-700 mb-1">Attachments:</h3>
+                      <ul className="space-y-1">
+                        {note.attachments.map((file, idx) => {
+                          const ext = file.split(".").pop()?.toLowerCase();
+                          if (["png","jpg","jpeg","gif","webp"].includes(ext || "")) {
+                            return <li key={idx}><img src={`http://localhost:5000/${file}`} alt="attachment" className="max-w-full rounded" /></li>;
+                          } else if (["mp3","wav","ogg"].includes(ext || "")) {
+                            return <li key={idx}><audio controls src={`http://localhost:5000/${file}`} className="w-full" /></li>;
+                          } else if (["mp4","webm","ogg"].includes(ext || "")) {
+                            return <li key={idx}><video controls src={`http://localhost:5000/${file}`} className="w-full rounded" /></li>;
+                          } else {
+                            return (
+                              <li key={idx}>
+                                <a href={`http://localhost:5000/${file}`} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                                  {file.split("/").pop()}
+                                </a>
+                              </li>
+                            );
+                          }
+                        })}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Created */}
                   <p className="text-xs text-gray-500 mt-2">
                     {new Date(note.createdAt).toLocaleString()}
                   </p>
+
+                  {/* Actions */}
                   <div className="flex gap-2 mt-4">
                     <button
                       onClick={() => startEditing(note)}

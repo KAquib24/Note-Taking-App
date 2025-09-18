@@ -5,7 +5,8 @@ export interface INote extends Document {
   content: string;
   tags: string[];
   user: mongoose.Types.ObjectId;
-  folder?: string; // 👈 new field
+  folder?: string;
+  attachments?: string[]; // ✅ New field
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,7 +17,8 @@ const NoteSchema = new Schema<INote>(
     content: { type: String, required: true },
     tags: [{ type: String }],
     folder: { type: String, default: "General" },
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true }
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    attachments: [{ type: String }], // ✅ Store uploaded file paths
   },
   { timestamps: true }
 );

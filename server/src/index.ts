@@ -3,7 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
-import noteRoutes from "./routes/notes"; // 👈 correct import
+import noteRoutes from "./routes/notes"; // 👈 correct 
+import path from "path"
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes); // 👈 now correct
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // MongoDB Connection
 mongoose

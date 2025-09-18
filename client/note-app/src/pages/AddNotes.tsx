@@ -8,7 +8,9 @@ import StarterKit from "@tiptap/starter-kit";
 import Heading from "@tiptap/extension-heading";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
+// import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Blockquote from "@tiptap/extension-blockquote";
+// import { lowlight } from "lowlight/lib/common"; // import lowlight for syntax highlighting
 
 export default function AddNote() {
   const [title, setTitle] = useState("");
@@ -16,23 +18,27 @@ export default function AddNote() {
   const [folder, setFolder] = useState("");
   const [folders, setFolders] = useState<string[]>([]);
   const [newFolder, setNewFolder] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
   const navigate = useNavigate();
 
-  // 📝 Tiptap editor instance without lowlight
+  // 📝 Tiptap editor
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: false, // disable default heading
+        heading: false, // disable heading from StarterKit
+        codeBlock: false, // disable codeBlock to use CodeBlockLowlight
+        blockquote: false, // disable default blockquote to prevent duplicates
       }),
       Heading.configure({ levels: [1, 2, 3] }),
       TaskList,
       TaskItem.configure({ nested: true }),
-      Blockquote,
+      // CodeBlockLowlight.configure({ lowlight }), // provide lowlight instance
+      Blockquote, // now safe to add custom blockquote
     ],
     content: "<p>Write your note here...</p>",
   });
 
-  // ✅ Fetch folders
+  // ✅ Fetch folders from existing notes
   useEffect(() => {
     const fetchFolders = async () => {
       try {
@@ -49,17 +55,36 @@ export default function AddNote() {
     fetchFolders();
   }, []);
 
+  // Handle file selection
+  const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFiles(Array.from(e.target.files));
+    }
+  };
+
+  // Submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const folderToUse = newFolder.trim() || folder || "General";
-    const content = editor?.getHTML() || ""; // ✅ get HTML
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", editor?.getHTML() || "");
+    formData.append("folder", folderToUse);
+
+    // Tags
+    tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .forEach((tag) => formData.append("tags[]", tag));
+
+    // Files
+    files.forEach((file) => formData.append("files", file));
 
     try {
-      await api.post("/notes", {
-        title,
-        content,
-        tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
-        folder: folderToUse,
+      await api.post("/notes", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
       navigate("/dashboard");
     } catch (err: any) {
@@ -121,9 +146,7 @@ export default function AddNote() {
         >
           <option value="">-- Select Folder --</option>
           {folders.map((f) => (
-            <option key={f} value={f}>
-              {f}
-            </option>
+            <option key={f} value={f}>{f}</option>
           ))}
           <option value="__new__">Add New Folder...</option>
         </select>
@@ -136,6 +159,21 @@ export default function AddNote() {
             onChange={(e) => setNewFolder(e.target.value)}
             className="w-full p-2 border rounded"
           />
+        )}
+
+        {/* File Upload */}
+        <input
+          type="file"
+          multiple
+          onChange={handleFilesChange}
+          className="w-full p-2 border rounded"
+        />
+        {files.length > 0 && (
+          <ul className="text-sm text-gray-700">
+            {files.map((file, idx) => (
+              <li key={idx}>{file.name}</li>
+            ))}
+          </ul>
         )}
 
         <button

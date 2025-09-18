@@ -82,7 +82,7 @@
 ### **Advanced Features (to stand out)**
 
 * Rich Text Editor: headings, checklists, code blocks, quotes  done(add lowlight alternative later on)
-* Attachments: images, PDFs, audio notes  
+* Attachments: images, PDFs, audio notes  done
 * Voice-to-text notes  
 * Reminders & notifications (set deadlines)  
 * Pin important notes to the top  
