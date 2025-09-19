@@ -3,14 +3,10 @@ import api from "../lib/axios";
 import { useNavigate } from "react-router-dom";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
-// Extra extensions
 import Heading from "@tiptap/extension-heading";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
-// import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Blockquote from "@tiptap/extension-blockquote";
-// import { lowlight } from "lowlight/lib/common"; // import lowlight for syntax highlighting
 
 export default function AddNote() {
   const [title, setTitle] = useState("");
@@ -19,21 +15,22 @@ export default function AddNote() {
   const [folders, setFolders] = useState<string[]>([]);
   const [newFolder, setNewFolder] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [dueDate, setDueDate] = useState<string>("");
+  const [reminder, setReminder] = useState<number | "">("");
   const navigate = useNavigate();
 
   // 📝 Tiptap editor
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: false, // disable heading from StarterKit
-        codeBlock: false, // disable codeBlock to use CodeBlockLowlight
-        blockquote: false, // disable default blockquote to prevent duplicates
+        heading: false,
+        codeBlock: false,
+        blockquote: false,
       }),
       Heading.configure({ levels: [1, 2, 3] }),
       TaskList,
       TaskItem.configure({ nested: true }),
-      // CodeBlockLowlight.configure({ lowlight }), // provide lowlight instance
-      Blockquote, // now safe to add custom blockquote
+      Blockquote,
     ],
     content: "<p>Write your note here...</p>",
   });
@@ -44,9 +41,7 @@ export default function AddNote() {
       try {
         const res = await api.get("/notes");
         const notes: { folder?: string }[] = res.data;
-        const allFolders = Array.from(
-          new Set(notes.map((n) => n.folder || "General"))
-        );
+        const allFolders = Array.from(new Set(notes.map((n) => n.folder || "General")));
         setFolders(allFolders);
       } catch (err) {
         console.error("Failed to fetch folders", err);
@@ -55,14 +50,12 @@ export default function AddNote() {
     fetchFolders();
   }, []);
 
-  // Handle file selection
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFiles(Array.from(e.target.files));
     }
   };
 
-  // Submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const folderToUse = newFolder.trim() || folder || "General";
@@ -81,6 +74,10 @@ export default function AddNote() {
 
     // Files
     files.forEach((file) => formData.append("files", file));
+
+    // Due Date & Reminder (optional)
+    if (dueDate) formData.append("dueDate", dueDate);
+    if (reminder !== "") formData.append("reminder", reminder.toString());
 
     try {
       await api.post("/notes", formData, {
@@ -107,7 +104,7 @@ export default function AddNote() {
           required
         />
 
-        {/* Toolbar */}
+        {/* Editor Toolbar */}
         <div className="flex flex-wrap gap-2 mb-2">
           <button type="button" onClick={() => editor?.chain().focus().toggleBold().run()}>B</button>
           <button type="button" onClick={() => editor?.chain().focus().toggleItalic().run()}>I</button>
@@ -117,11 +114,9 @@ export default function AddNote() {
           <button type="button" onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}>H2</button>
           <button type="button" onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}>H3</button>
           <button type="button" onClick={() => editor?.chain().focus().toggleTaskList().run()}>☑ Checklist</button>
-          <button type="button" onClick={() => editor?.chain().focus().toggleCodeBlock().run()}>{"</>"}</button>
           <button type="button" onClick={() => editor?.chain().focus().toggleBlockquote().run()}>❝ Quote</button>
         </div>
 
-        {/* Editor */}
         <div className="border p-2 rounded bg-white dark:bg-gray-700">
           <EditorContent editor={editor} />
         </div>
@@ -175,6 +170,24 @@ export default function AddNote() {
             ))}
           </ul>
         )}
+
+        {/* Due Date & Reminder */}
+        <div className="flex gap-2">
+          <input
+            type="datetime-local"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="w-1/2 p-2 border rounded"
+          />
+          <input
+            type="number"
+            placeholder="Reminder (minutes before)"
+            value={reminder}
+            onChange={(e) => setReminder(e.target.value === "" ? "" : parseInt(e.target.value))}
+            className="w-1/2 p-2 border rounded"
+            min={0}
+          />
+        </div>
 
         <button
           type="submit"

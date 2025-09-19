@@ -84,18 +84,16 @@
 * Rich Text Editor: headings, checklists, code blocks, quotes  done(add lowlight alternative later on)
 * Attachments: images, PDFs, audio notes  done
 * Voice-to-text notes  
-* Reminders & notifications (set deadlines)  
-* Pin important notes to the top  
-* Dark mode / theme customization  
-* Cloud sync (custom backend REST endpoints)  
-* Offline mode with auto-sync when online  
-* Export notes (PDF, Markdown, TXT)  
+* Reminders & notifications (set deadlines)  done
+* Pin important notes to the top done   
+* Dark mode / theme customization  done 
+* Export notes (PDF, Markdown, TXT)  half done 
 
 ---
 
 ### **Unique / Next-Level Features**
 
-* Handwriting support (draw/write with a stylus)  
+* Handwriting support (draw/write with a stylus)  done
 * Collaboration: share & edit notes with friends/teams (via REST APIs)  
 * Version history: go back to previous edits  
 * AI-powered features:

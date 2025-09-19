@@ -19,6 +19,7 @@
     "@tiptap/starter-kit": "^3.4.4",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
+    "jspdf": "^3.0.3",
     "lowlight": "^3.3.0",
     "quill": "^2.0.3",
     "react": "^18.3.1",
@@ -27,14 +28,17 @@
     "react-quill": "^2.0.0",
     "react-quilljs": "^2.0.5",
     "react-router-dom": "^7.9.1",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "turndown": "^7.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@types/highlight.js": "^10.1.0",
+    "@types/jspdf": "^2.0.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@types/react-router-dom": "^5.3.3",
+    "@types/turndown": "^5.0.5",
     "@vitejs/plugin-react": "^5.0.0",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",

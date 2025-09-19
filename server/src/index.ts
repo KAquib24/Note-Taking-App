@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import noteRoutes from "./routes/notes"; // 👈 correct 
 import path from "path"
+import stylusRouter from "./routes/stylus";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes); // 👈 now correct
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/api/stylus", stylusRouter);
 
 // MongoDB Connection
 mongoose

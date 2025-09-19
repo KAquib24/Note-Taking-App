@@ -1,26 +1,32 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface INote extends Document {
   title: string;
   content: string;
-  tags: string[];
-  user: mongoose.Types.ObjectId;
+  tags?: string[];
   folder?: string;
-  attachments?: string[]; // ✅ New field
+  user: mongoose.Schema.Types.ObjectId;
+  attachments?: string[];
+  dueDate?: Date;
+  reminder?: number;
+  pinned?: boolean; // ✅ Add this line
   createdAt: Date;
   updatedAt: Date;
 }
 
-const NoteSchema = new Schema<INote>(
+const noteSchema = new Schema<INote>(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
     tags: [{ type: String }],
     folder: { type: String, default: "General" },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    attachments: [{ type: String }], // ✅ Store uploaded file paths
+    attachments: [{ type: String }],
+    dueDate: { type: Date },
+    reminder: { type: Number },
+    pinned: { type: Boolean, default: false }, // ✅ Add this line
   },
   { timestamps: true }
 );
 
-export default mongoose.model<INote>("Note", NoteSchema);
+export default mongoose.model<INote>("Note", noteSchema);

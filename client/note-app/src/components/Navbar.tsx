@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 interface NavbarProps {
@@ -10,6 +10,7 @@ const Navbar = ({ onSearch }: NavbarProps) => {
   const { token, logout } = useAuth();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all"); // 👈 default: all fields
+  const navigate = useNavigate(); // ✅ use hook
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -42,6 +43,12 @@ const Navbar = ({ onSearch }: NavbarProps) => {
             <Link to="/dashboard" className="hover:underline">
               Dashboard
             </Link>
+            <button
+              onClick={() => navigate("/stylus")}
+              className="px-3 py-1 bg-blue-500 text-white rounded"
+            >
+              Stylus Notes
+            </button>
           </>
         )}
       </div>
