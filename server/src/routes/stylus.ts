@@ -6,7 +6,7 @@ import StylusNote from "../models/StylusNote";
 
 const router = express.Router();
 
-// multer setup
+// multer setup - INCREASE FILE SIZE LIMIT
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = "uploads/stylus";
@@ -17,7 +17,12 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-const upload = multer({ storage });
+
+// ✅ Increase file size limit to 50MB
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB limit
+});
 
 // GET all notes
 router.get("/", async (req, res) => {
@@ -32,15 +37,51 @@ router.get("/", async (req, res) => {
 // POST new note
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, folder } = req.body;
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
     const newNote = await StylusNote.create({
       title: title || "Untitled",
-      image: req.file.path.replace("\\", "/"),
+      folder: folder || "Default",
+      image: req.file.path.replace(/\\/g, "/"),
     });
 
     res.json(newNote);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// PUT update note
+router.put("/:id", upload.single("image"), async (req, res) => {
+  try {
+    const { title, folder } = req.body;
+    const updateData: any = { title, folder };
+    
+    if (req.file) {
+      // Delete old image if exists
+      const oldNote = await StylusNote.findById(req.params.id);
+      if (oldNote && oldNote.image) {
+        try {
+          fs.unlinkSync(oldNote.image);
+        } catch (err) {
+          console.error("Error deleting old image:", err);
+        }
+      }
+      updateData.image = req.file.path.replace(/\\/g, "/");
+    }
+
+    const updatedNote = await StylusNote.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    res.json(updatedNote);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
@@ -50,7 +91,13 @@ router.post("/", upload.single("image"), async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const note = await StylusNote.findByIdAndDelete(req.params.id);
-    if (note) fs.unlinkSync(note.image); // remove image
+    if (note && note.image) {
+      try {
+        fs.unlinkSync(note.image);
+      } catch (err) {
+        console.error("Error deleting image file:", err);
+      }
+    }
     res.json({ message: "Deleted" });
   } catch (err) {
     res.status(500).json({ error: "Server error" });

@@ -1,4 +1,3 @@
-// File: StylusDashboard.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +37,7 @@ const StylusDashboard: React.FC = () => {
     if (!confirm("Delete this stylus note?")) return;
     try {
       await fetch(`http://localhost:5000/api/stylus/${id}`, { method: "DELETE" });
-      setNotes(prev => prev.filter(n => n._id !== id));
+      setNotes((prev) => prev.filter((n) => n._id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -48,41 +47,64 @@ const StylusDashboard: React.FC = () => {
     navigate("/handwriting", { state: { note } });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center text-lg">⏳ Loading...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">Stylus Notes</h1>
-      <button
-        onClick={() => navigate("/handwriting")}
-        className="mb-4 px-3 py-1 bg-blue-500 text-white rounded"
-      >
-        Add New Stylus Note
-      </button>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {notes.map(note => (
-          <div key={note._id} className="border rounded p-4 relative">
-            <h2 className="font-semibold mb-2">{note.title}</h2>
-            <p className="text-sm text-gray-500 mb-2">{note.folder}</p>
-            <img src={`http://localhost:5000/${note.image}`} alt={note.title} className="w-full rounded mb-2" />
-            <div className="flex gap-2 absolute top-2 right-2">
-              <button
-                onClick={() => editNote(note)}
-                className="bg-yellow-500 text-white px-2 py-1 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => deleteNote(note._id)}
-                className="bg-red-600 text-white px-2 py-1 rounded"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+    <div className="p-8 min-h-screen bg-gray-50">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">
+          ✍️ Stylus Notes
+        </h1>
+        <button
+          onClick={() => navigate("/handwriting")}
+          className="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold shadow-md hover:scale-105 transform transition"
+        >
+          + New Stylus Note
+        </button>
       </div>
+
+      {notes.length === 0 ? (
+        <p className="text-gray-600 text-center mt-20">
+          No stylus notes yet. Click <b>+ New Stylus Note</b> to get started!
+        </p>
+      ) : (
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {notes.map((note) => (
+            <div
+              key={note._id}
+              className="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition relative"
+            >
+              <img
+                src={`http://localhost:5000/${note.image}`}
+                alt={note.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-lg font-bold text-gray-800 truncate">
+                  {note.title}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  {note.folder || "Uncategorized"}
+                </p>
+              </div>
+              <div className="absolute top-3 right-3 flex gap-2">
+                <button
+                  onClick={() => editNote(note)}
+                  className="px-3 py-1 rounded-lg bg-yellow-500 text-white text-sm font-medium shadow hover:bg-yellow-600"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => deleteNote(note._id)}
+                  className="px-3 py-1 rounded-lg bg-red-600 text-white text-sm font-medium shadow hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

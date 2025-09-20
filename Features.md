@@ -99,10 +99,9 @@
 * AI-powered features:
   * Summarize long notes  
   * Generate action items from meeting notes  
-  * Suggest tags automatically  
+  * Suggest tags automatically 
 * Encryption & password protection (for sensitive notes)  
-* Templates (daily journal, to-do list, lecture notes)  
-* Cross-platform sync (Web + Mobile app)  
+* Templates (daily journal, to-do list, lecture notes)   done(folder) 
 * Widget support (quick access on home screen)  
 * Speech playback (app reads your notes aloud)  
 * Smart links: detect URLs, phone numbers, emails inside notes  
