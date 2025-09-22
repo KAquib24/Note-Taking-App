@@ -34,7 +34,7 @@ app.use("/api/stylus", stylusRouter);
 
 // MongoDB Connection
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/notes-app")
+  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/database")
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
