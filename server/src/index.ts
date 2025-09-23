@@ -6,8 +6,12 @@ import authRoutes from "./routes/auth";
 import noteRoutes from "./routes/notes"; 
 import path from "path";
 import stylusRouter from "./routes/stylus";
+import aiRoutes from "./routes/ai";
 
 dotenv.config();
+
+console.log("OPENAI API KEY:", process.env.OPENAI_API_KEY);
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,8 +33,8 @@ app.use(
     },
   })
 );
-
 app.use("/api/stylus", stylusRouter);
+app.use("/api/ai", aiRoutes);
 
 // MongoDB Connection
 mongoose

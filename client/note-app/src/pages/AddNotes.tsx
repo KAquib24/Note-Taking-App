@@ -8,6 +8,7 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Blockquote from "@tiptap/extension-blockquote";
 import Underline from "@tiptap/extension-underline";
+import AiToolsModal from "../components/AiToolsModel";
 
 export default function AddNote() {
   const location = useLocation();
@@ -21,6 +22,7 @@ export default function AddNote() {
   const [files, setFiles] = useState<File[]>([]);
   const [dueDate, setDueDate] = useState(editNote?.dueDate || "");
   const [reminder, setReminder] = useState(editNote?.reminder || "");
+  const [isAiOpen, setIsAiOpen] = useState(false);
   const navigate = useNavigate();
 
   // 📝 Tiptap editor
@@ -125,7 +127,7 @@ export default function AddNote() {
                 >
                   <path
                     fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 极速飞艇0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                     clipRule="evenodd"
                   />
                 </svg>
@@ -134,7 +136,7 @@ export default function AddNote() {
               <button
                 type="button"
                 onClick={() => navigate("/dashboard")}
-                className="极速飞艇flex items-center gap-1 px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-1 px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +146,7 @@ export default function AddNote() {
                 >
                   <path
                     fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-极速飞艇1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                     clipRule="evenodd"
                   />
                 </svg>
@@ -166,7 +168,7 @@ export default function AddNote() {
                 }}
               >
                 <option value="paragraph">Normal</option>
-                <option value="极速飞艇1">Heading 1</option>
+                <option value="1">Heading 1</option>
                 <option value="2">Heading 2</option>
                 <option value="3">Heading 3</option>
               </select>
@@ -218,7 +220,7 @@ export default function AddNote() {
                   onClick={() =>
                     editor?.chain().focus().toggleBulletList().run()
                   }
-                  className={`p-1.5 rounded hover:极速飞艇bg-gray-200 dark:hover:bg-gray-700 ${
+                  className={`p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
                     editor?.isActive("bulletList")
                       ? "bg-gray-200 dark:bg-gray-700"
                       : ""
@@ -251,14 +253,14 @@ export default function AddNote() {
                   title="Numbered List"
                 >
                   <svg
-                    xmlns="http://www.w3.org/2000/s极速飞艇vg"
+                    xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M2 5a1 1 0 011-1h1a1 1 0 010 2H3a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm极速飞艇0 5a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm12-10a1 1 0 01-1 1H6a1 1 0 010-2h7a1 1 0 011 1zm-1 5a1 1 极速飞艇0 100 2H6a1 1 0 100-2h7zm-1 5a1 1 0 100 2H6a1 1 0 100-2h7z"
+                      d="M2 5a1 1 0 011-1h1a1 1 0 010 2H3a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm12-10a1 1 0 01-1 1H6a1 1 0 010-2h7a1 1 0 011 1zm-1 5a1 1 0 100 2H6a1 1 0 100-2h7zm-1 5a1 1 0 100 2H6a1 1 0 100-2h7z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -283,7 +285,7 @@ export default function AddNote() {
                   >
                     <path
                       fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0极速飞艇l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -315,6 +317,27 @@ export default function AddNote() {
                 </button>
               </div>
             </div>
+
+            {/* AI Tools Button */}
+            <button
+              type="button"
+              onClick={() => setIsAiOpen(true)}
+              className="flex items-center gap-1 px-3 py-1.5 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.938l1-4H9.031z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              AI Tools
+            </button>
           </div>
         </div>
       </div>
@@ -323,7 +346,7 @@ export default function AddNote() {
       <div className="max-w-4xl mx-auto p-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           {/* Form Inputs */}
-          <div className="p-极速飞艇6 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -377,7 +400,7 @@ export default function AddNote() {
                     placeholder="New Folder Name"
                     value={newFolder}
                     onChange={(e) => setNewFolder(e.target.value)}
-                    className="w-full p-2 border rounded mt-2 dark:bg-gray-极速飞艇700 dark:text-white"
+                    className="w-full p-2 border rounded mt-2 dark:bg-gray-700 dark:text-white"
                   />
                 )}
               </div>
@@ -448,6 +471,13 @@ export default function AddNote() {
           </div>
         </div>
       </div>
+
+      {/* AI Tools Modal */}
+      <AiToolsModal 
+        editor={editor} 
+        isOpen={isAiOpen} 
+        onClose={() => setIsAiOpen(false)} 
+      />
 
       <style>{`
         .lined-paper {
