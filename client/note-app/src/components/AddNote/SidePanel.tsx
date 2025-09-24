@@ -13,10 +13,7 @@ interface SidePanelProps {
 export const SidePanel = ({ 
   formData, 
   folders, 
-  passwordState, 
   onFormChange, 
-  onPasswordChange, 
-  onPasswordAction,
   onFilesChange 
 }: SidePanelProps) => {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,12 +39,7 @@ export const SidePanel = ({
           formData={formData} 
           onFormChange={onFormChange} 
         />
-        
-        <PasswordSection 
-          passwordState={passwordState}
-          onPasswordChange={onPasswordChange}
-          onPasswordAction={onPasswordAction}
-        />
+      
         
         <AttachmentsSection 
           files={formData.files}
@@ -106,67 +98,6 @@ const TagsSection = ({ formData, onFormChange }: any) => (
       onChange={(e) => onFormChange({ tags: e.target.value })}
       className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
     />
-  </div>
-);
-
-const PasswordSection = ({ passwordState, onPasswordChange, onPasswordAction }: any) => (
-  <div>
-    <label className="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
-      Password Protection {passwordState.isPasswordProtected && "🔒"}
-    </label>
-
-    <input
-      type="password"
-      placeholder="Set note password"
-      value={passwordState.password}
-      onChange={(e) => onPasswordChange(e.target.value)}
-      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-    />
-
-    <div className="flex gap-2 mt-2">
-      {!passwordState.isPasswordProtected ? (
-        <button
-          onClick={() => onPasswordAction('protect')}
-          disabled={!passwordState.password}
-          className="flex-1 px-3 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
-        >
-          🔒 Protect Note
-        </button>
-      ) : (
-        <>
-          {!passwordState.isUnlocked ? (
-            <button
-              onClick={() => onPasswordAction('unlock')}
-              disabled={!passwordState.password}
-              className="flex-1 px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              🔓 Unlock
-            </button>
-          ) : (
-            <button
-              onClick={() => onPasswordAction('lock')}
-              className="flex-1 px-3 py-2 bg-yellow-600 text-white rounded-sm hover:bg-yellow-700 transition-colors text-sm"
-            >
-              🔒 Lock
-            </button>
-          )}
-          <button
-            onClick={() => onPasswordAction('remove')}
-            className="flex-1 px-3 py-2 bg-red-600 text-white rounded-sm hover:bg-red-700 transition-colors text-sm"
-          >
-            Remove
-          </button>
-        </>
-      )}
-    </div>
-
-    {passwordState.isPasswordProtected && (
-      <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-2">
-        {passwordState.isUnlocked 
-          ? "🔓 Note is unlocked. Click 'Lock' to protect again." 
-          : "🔒 This note is password-protected. Enter the correct password to view content."}
-      </p>
-    )}
   </div>
 );
 
