@@ -74,8 +74,8 @@
 * Categorization (folders, tags, or labels)  done
 * Basic formatting (bold, italic, underline, lists)  done
 * Auto-save (avoid losing notes)  done
-* Responsive UI (works well on mobile & desktop) 
-* History of Changes 
+* Responsive UI (works well on mobile & desktop) done
+<!-- * History of Changes future feature -->
 
 ---
 
@@ -83,7 +83,7 @@
 
 * Rich Text Editor: headings, checklists, code blocks, quotes  done(add lowlight alternative later on)
 * Attachments: images, PDFs, audio notes  done
-* Voice-to-text notes  
+<!-- * Voice-to-text notes  future feature  -->
 * Reminders & notifications (set deadlines)  done
 * Pin important notes to the top done   
 * Dark mode / theme customization  done 
@@ -94,17 +94,13 @@
 ### **Unique / Next-Level Features**
 
 * Handwriting support (draw/write with a stylus)  done
-* Collaboration: share & edit notes with friends/teams (via REST APIs)  
-* Version history: go back to previous edits  
-* AI-powered features:
+<!-- * Collaboration: share & edit notes with friends/teams (via REST APIs)  future features  -->
+<!-- * Version history: go back to previous edits   future features  -->
+* AI-powered features: done 
   * Summarize long notes  
   * Generate action items from meeting notes  
   * Suggest tags automatically 
-* Encryption & password protection (for sensitive notes)  
-* Templates (daily journal, to-do list, lecture notes)   done(folder) 
-* Widget support (quick access on home screen)  
-* Speech playback (app reads your notes aloud)  
-* Smart links: detect URLs, phone numbers, emails inside notes  
+* Encryption & password protection (for sensitive notes)  done  
 
 ---
 
