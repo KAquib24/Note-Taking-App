@@ -1,8 +1,3 @@
-Got it! Based on the example you shared, I can create a **full, detailed, professional `README.md`** for your **Note‑Taking App** project with proper sections, file structure, usage, setup instructions, badges, and all. You can copy-paste this directly.
-
----
-
-```markdown
 # 📝 Note-Taking App
 
 <div align="center">
