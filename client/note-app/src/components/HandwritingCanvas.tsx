@@ -1,4 +1,3 @@
-// File: src/components/HandwritingCanvas.tsx
 import React, { useRef, useState, useEffect, useCallback } from "react";
 
 interface HandwritingCanvasProps {
@@ -474,26 +473,26 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
 
   return (
     <div
-      className={`rounded-xl shadow-lg p-4 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-50"
+      className={`rounded-3xl shadow-2xl p-6 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 ${
+        darkMode ? "bg-gray-900/90 text-white" : "bg-gray-50/90"
       }`}
     >
       {/* Toolbar */}
-      <div className="mb-4 flex flex-wrap items-center gap-3">
+      <div className="mb-6 flex flex-wrap items-center gap-4">
         <input
           type="text"
-          placeholder="Note Title"
+          placeholder="Canvas Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className={`px-3 py-2 rounded-lg border focus:ring-2 focus:ring-indigo-400 outline-none ${
-            darkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-white"
+          className={`px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-blue-500 outline-none font-medium ${
+            darkMode ? "bg-gray-800/80 border-gray-700/50 text-white" : "bg-white/80 border-white/20"
           }`}
         />
         <select
           value={folder}
           onChange={(e) => setFolder(e.target.value)}
-          className={`px-3 py-2 rounded-lg border focus:ring-2 focus:ring-indigo-400 outline-none ${
-            darkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-white"
+          className={`px-4 py-3 rounded-xl border-2 focus:ring-2 focus:ring-blue-500 outline-none font-medium ${
+            darkMode ? "bg-gray-800/80 border-gray-700/50 text-white" : "bg-white/80 border-white/20"
           }`}
         >
           {folders.map((f) => (
@@ -504,23 +503,23 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
         </select>
 
         {/* Tool Mode Selection */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={() => setToolMode("draw")}
-            className={`px-3 py-1 rounded-lg text-sm font-medium shadow ${
+            className={`px-4 py-3 rounded-xl text-sm font-bold shadow-lg transition-all duration-300 ${
               toolMode === "draw"
-                ? "bg-blue-600 text-white"
-                : darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700"
+                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                : darkMode ? "bg-gray-700/80 text-white hover:bg-gray-600/80" : "bg-white/80 text-gray-700 hover:bg-white"
             }`}
           >
             ✏️ Draw
           </button>
           <button
             onClick={() => setToolMode("shape")}
-            className={`px-3 py-1 rounded-lg text-sm font-medium shadow ${
+            className={`px-4 py-3 rounded-xl text-sm font-bold shadow-lg transition-all duration-300 ${
               toolMode === "shape"
-                ? "bg-purple-600 text-white"
-                : darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700"
+                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                : darkMode ? "bg-gray-700/80 text-white hover:bg-gray-600/80" : "bg-white/80 text-gray-700 hover:bg-white"
             }`}
           >
             🔷 Shapes
@@ -534,10 +533,10 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
               <button
                 key={type}
                 onClick={() => setBrushType(type)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium shadow ${
+                className={`p-3 rounded-xl text-sm font-bold shadow-lg transition-all duration-300 ${
                   brushType === type
-                    ? "bg-indigo-600 text-white"
-                    : darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700"
+                    ? "bg-gradient-to-r from-indigo-500 to-blue-500 text-white"
+                    : darkMode ? "bg-gray-700/80 text-white hover:bg-gray-600/80" : "bg-white/80 text-gray-700 hover:bg-white"
                 }`}
                 title={type.charAt(0).toUpperCase() + type.slice(1)}
               >
@@ -560,10 +559,10 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
               <button
                 key={type}
                 onClick={() => setShapeType(type)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium shadow ${
+                className={`p-3 rounded-xl text-sm font-bold shadow-lg transition-all duration-300 ${
                   shapeType === type
-                    ? "bg-purple-600 text-white"
-                    : darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700"
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                    : darkMode ? "bg-gray-700/80 text-white hover:bg-gray-600/80" : "bg-white/80 text-gray-700 hover:bg-white"
                 }`}
                 title={type.charAt(0).toUpperCase() + type.slice(1)}
               >
@@ -577,48 +576,50 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
         )}
 
         {/* Color & Brush Controls */}
-        <label className="flex items-center gap-2">
-          <span className="text-sm">Color</span>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="w-10 h-10 rounded cursor-pointer"
-          />
-        </label>
-        <label className="flex items-center gap-2">
-          <span className="text-sm">Size</span>
-          <input
-            type="range"
-            min={1}
-            max={30}
-            value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
-            className="w-24"
-          />
-        </label>
-        <label className="flex items-center gap-2">
-          <span className="text-sm">Opacity</span>
-          <input
-            type="range"
-            min={0.1}
-            max={1}
-            step={0.1}
-            value={opacity}
-            onChange={(e) => setOpacity(Number(e.target.value))}
-            className="w-24"
-          />
-        </label>
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-3">
+            <span className="text-sm font-bold">Color</span>
+            <input
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              className="w-12 h-12 rounded-xl cursor-pointer border-2 border-white/20"
+            />
+          </label>
+          <label className="flex items-center gap-3">
+            <span className="text-sm font-bold">Size</span>
+            <input
+              type="range"
+              min={1}
+              max={30}
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              className="w-32"
+            />
+          </label>
+          <label className="flex items-center gap-3">
+            <span className="text-sm font-bold">Opacity</span>
+            <input
+              type="range"
+              min={0.1}
+              max={1}
+              step={0.1}
+              value={opacity}
+              onChange={(e) => setOpacity(Number(e.target.value))}
+              className="w-32"
+            />
+          </label>
+        </div>
 
         {/* Undo/Redo */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={undo}
             disabled={history.length === 0}
-            className={`px-3 py-1 rounded-lg text-sm ${
+            className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
               history.length === 0
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : darkMode ? "bg-gray-700 hover:bg-gray-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                : darkMode ? "bg-gray-700/80 hover:bg-gray-600/80 text-white" : "bg-white/80 hover:bg-white text-gray-700"
             }`}
           >
             ⎌ Undo
@@ -626,10 +627,10 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
           <button
             onClick={redo}
             disabled={redoStack.length === 0}
-            className={`px-3 py-1 rounded-lg text-sm ${
+            className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
               redoStack.length === 0
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : darkMode ? "bg-gray-700 hover:bg-gray-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                : darkMode ? "bg-gray-700/80 hover:bg-gray-600/80 text-white" : "bg-white/80 hover:bg-white text-gray-700"
             }`}
           >
             ↻ Redo
@@ -639,7 +640,7 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
         {/* Clear Canvas */}
         <button
           onClick={clearCanvas}
-          className="px-3 py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm font-medium shadow"
+          className="px-4 py-3 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white text-sm font-bold shadow-lg transition-all duration-300"
         >
           🗑️ Clear
         </button>
@@ -647,7 +648,7 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
         {/* Save */}
         <button
           onClick={saveCanvas}
-          className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold shadow hover:bg-green-700"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold shadow-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-300 hover:scale-105"
         >
           {editNote ? "💾 Update" : "💾 Save"}
         </button>
@@ -656,7 +657,7 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
       {/* Canvas Container with Resize Handle */}
       <div 
         ref={containerRef}
-        className="relative overflow-auto rounded-lg border-2 border-dashed border-gray-300 shadow-inner"
+        className="relative overflow-auto rounded-2xl border-2 border-dashed border-white/20 shadow-inner"
         style={{ 
           maxWidth: "100%", 
           maxHeight: "70vh",
@@ -667,7 +668,7 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
           ref={canvasRef}
           width={canvasSize.width}
           height={canvasSize.height}
-          className={`rounded-lg ${darkMode ? "bg-gray-800" : "bg-white"}`}
+          className={`rounded-2xl ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg`}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
@@ -676,15 +677,15 @@ const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({
         
         {/* Resize Handle */}
         <div
-          className="absolute bottom-1 right-1 w-4 h-4 cursor-nwse-resize bg-gray-400 rounded-sm opacity-50 hover:opacity-100"
+          className="absolute bottom-2 right-2 w-6 h-6 cursor-nwse-resize bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg opacity-70 hover:opacity-100 transition-all duration-300 shadow-lg"
           onMouseDown={startResizing}
           style={{ zIndex: 10 }}
         >
-          <div className="w-full h-full flex items-center justify-center text-xs">↘️</div>
+          <div className="w-full h-full flex items-center justify-center text-white text-xs">↘️</div>
         </div>
         
         {/* Canvas Size Indicator */}
-        <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+        <div className="absolute top-3 right-3 bg-black/70 text-white text-sm px-3 py-2 rounded-xl font-bold backdrop-blur-sm">
           {canvasSize.width} × {canvasSize.height}
         </div>
       </div>

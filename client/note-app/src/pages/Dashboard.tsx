@@ -91,7 +91,8 @@ export const Dashboard = ({ searchQuery, searchFilter }: DashboardProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 dark:from-gray-900 dark:via-purple-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-all duration-500">
+      
       <DashboardHeader
         filteredNotesCount={filteredNotes.length}
         viewMode={viewMode}
@@ -103,7 +104,8 @@ export const Dashboard = ({ searchQuery, searchFilter }: DashboardProps) => {
         onNewNote={() => navigate("/add-note")}
       />
 
-      <div className="container mx-auto px-6 py-6">
+      <div className="container mx-auto px-6 py-8">
+        
         <FolderNavigation
           folders={folders}
           selectedFolder={selectedFolder}
@@ -148,9 +150,59 @@ export const Dashboard = ({ searchQuery, searchFilter }: DashboardProps) => {
       />
 
       <style>{`
-        .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-1 { 
+          display: -webkit-box; 
+          -webkit-line-clamp: 1; 
+          -webkit-box-orient: vertical; 
+          overflow: hidden;
+        }
+        
+        .line-clamp-2 { 
+          display: -webkit-box; 
+          -webkit-line-clamp: 2; 
+          -webkit-box-orient: vertical; 
+          overflow: hidden;
+        }
+        
+        .line-clamp-3 { 
+          display: -webkit-box; 
+          -webkit-line-clamp: 3; 
+          -webkit-box-orient: vertical; 
+          overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.1);
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: #4f46e5;
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #6366f1;
+        }
+
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .note-card {
+          animation: slideInUp 0.6s ease-out;
+        }
       `}</style>
     </div>
   );

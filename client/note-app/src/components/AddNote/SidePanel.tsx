@@ -27,8 +27,8 @@ export const SidePanel = ({
   };
 
   return (
-    <div className="w-80 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-6">
-      <div className="space-y-6">
+    <div className="w-96 bg-gradient-to-b from-slate-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-r border-white/20 dark:border-gray-700/50 p-8">
+      <div className="space-y-8">
         <FolderSection 
           formData={formData} 
           folders={folders} 
@@ -39,7 +39,6 @@ export const SidePanel = ({
           formData={formData} 
           onFormChange={onFormChange} 
         />
-      
         
         <AttachmentsSection 
           files={formData.files}
@@ -58,7 +57,7 @@ export const SidePanel = ({
 
 const FolderSection = ({ formData, folders, onFormChange }: any) => (
   <div>
-    <label className="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">Folder</label>
+    <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wide">Workspace</label>
     <select
       value={formData.folder}
       onChange={(e) => {
@@ -67,22 +66,22 @@ const FolderSection = ({ formData, folders, onFormChange }: any) => (
           newFolder: e.target.value === "__new__" ? formData.newFolder : "" 
         });
       }}
-      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      className="w-full p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 backdrop-blur-sm font-medium"
     >
-      <option value="">-- Select Folder --</option>
+      <option value="">Select Workspace</option>
       {folders.map((f: string) => (
         <option key={f} value={f}>{f}</option>
       ))}
-      <option value="__new__">Create New Folder...</option>
+      <option value="__new__">Create New Workspace</option>
     </select>
 
     {formData.folder === "__new__" && (
       <input
         type="text"
-        placeholder="New Folder Name"
+        placeholder="New Workspace Name"
         value={formData.newFolder}
         onChange={(e) => onFormChange({ newFolder: e.target.value })}
-        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white mt-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="w-full p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white mt-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 backdrop-blur-sm font-medium"
       />
     )}
   </div>
@@ -90,21 +89,21 @@ const FolderSection = ({ formData, folders, onFormChange }: any) => (
 
 const TagsSection = ({ formData, onFormChange }: any) => (
   <div>
-    <label className="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">Tags</label>
+    <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wide">Labels</label>
     <input
       type="text"
-      placeholder="Tags (comma separated)"
+      placeholder="Add labels (comma separated)"
       value={formData.tags}
       onChange={(e) => onFormChange({ tags: e.target.value })}
-      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      className="w-full p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 backdrop-blur-sm font-medium"
     />
   </div>
 );
 
 const AttachmentsSection = ({ files, onFilesChange, onRemoveFile }: any) => (
   <div>
-    <label className="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">Attachments</label>
-    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-sm p-4 text-center">
+    <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wide">Attachments</label>
+    <div className="border-2 border-dashed border-gray-300/50 dark:border-gray-600/50 rounded-xl p-6 text-center bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300">
       <input
         type="file"
         multiple
@@ -113,20 +112,22 @@ const AttachmentsSection = ({ files, onFilesChange, onRemoveFile }: any) => (
         id="file-upload"
       />
       <label htmlFor="file-upload" className="cursor-pointer">
-        <svg className="w-8 h-8 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-        </svg>
-        <span className="text-sm text-gray-600 dark:text-gray-400">Click to add files</span>
+        <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Drop files or click to upload</span>
       </label>
     </div>
     {files.length > 0 && (
-      <div className="mt-3 space-y-2">
+      <div className="mt-4 space-y-2">
         {files.map((file: File, idx: number) => (
-          <div key={idx} className="flex items-center justify-between bg-white dark:bg-gray-800 p-2 rounded border">
-            <span className="text-sm truncate">{file.name}</span>
+          <div key={idx} className="flex items-center justify-between bg-white/80 dark:bg-gray-800/80 p-3 rounded-xl border border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm">
+            <span className="text-sm font-medium truncate text-gray-700 dark:text-gray-300">{file.name}</span>
             <button
               onClick={() => onRemoveFile(idx)}
-              className="text-red-500 hover:text-red-700"
+              className="w-6 h-6 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500/20 transition-all duration-200 flex items-center justify-center"
             >
               ×
             </button>
@@ -138,24 +139,24 @@ const AttachmentsSection = ({ files, onFilesChange, onRemoveFile }: any) => (
 );
 
 const DateTimeSection = ({ formData, onFormChange }: any) => (
-  <div className="grid grid-cols-1 gap-4">
+  <div className="grid grid-cols-1 gap-6">
     <div>
-      <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Due Date</label>
+      <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wide">Due Date</label>
       <input
         type="datetime-local"
         value={formData.dueDate}
         onChange={(e) => onFormChange({ dueDate: e.target.value })}
-        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="w-full p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 backdrop-blur-sm font-medium"
       />
     </div>
     <div>
-      <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Reminder (minutes)</label>
+      <label className="block text-sm font-bold mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wide">Reminder</label>
       <input
         type="number"
-        placeholder="Set reminder"
+        placeholder="Set reminder in minutes"
         value={formData.reminder}
         onChange={(e) => onFormChange({ reminder: e.target.value === "" ? "" : parseInt(e.target.value) })}
-        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        className="w-full p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 backdrop-blur-sm font-medium"
         min={0}
       />
     </div>
