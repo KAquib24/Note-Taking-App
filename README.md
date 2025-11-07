@@ -19,11 +19,11 @@
 
 | Dashboard | Add Note | Canvas Dashboard |
 |------------|-----------|------------------|
-| ![Dashboard](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/dashboard.png) | ![Add Note](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/add-note.png) | ![Canvas Dashboard](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/canvas-dashboard.png) |
+| ![Dashboard](./images/dashboard.png) | ![Add Note](./images/add-note.png) | ![Canvas Dashboard](./images/canvas-dashboard.png) |
 
 | Create Canvas | AI Assistant |
 |---------------|---------------|
-| ![Create Canvas](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/create-canvas.png) | ![AI Assistant](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/ai-assistant.png) |
+| ![Create Canvas](./images/create-canvas.png) | ![AI Assistant](./images/ai-assistant.png) |
 
 ---
 
