@@ -17,11 +17,13 @@
 
 ## 🖼️ Preview
 
-| Home | Add Note | Edit/Delete |
-|------|-----------|-------------|
-| ![Home](https://via.placeholder.com/400x220.png?text=Home+Page+Preview) | ![Add](https://via.placeholder.com/400x220.png?text=Add+Note) | ![Edit](https://via.placeholder.com/400x220.png?text=Edit+or+Delete+Note) |
+| Dashboard | Add Note | Canvas Dashboard |
+|------------|-----------|------------------|
+| ![Dashboard](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/dashboard.png) | ![Add Note](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/add-note.png) | ![Canvas Dashboard](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/canvas-dashboard.png) |
 
-> *(Replace the above with your actual screenshots when available.)*
+| Create Canvas | AI Assistant |
+|---------------|---------------|
+| ![Create Canvas](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/create-canvas.png) | ![AI Assistant](https://raw.githubusercontent.com/KAquib24/Note-Taking-App/main/client/note-app/public/ai-assistant.png) |
 
 ---
 
